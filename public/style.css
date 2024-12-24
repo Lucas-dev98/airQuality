@@ -1,3 +1,4 @@
+/* filepath: /home/lucasbastos/airQuality/public/style.css */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
@@ -9,7 +10,7 @@ body {
     overflow: hidden;
     padding: 0 20px;
     position: relative; /* Necessário para o posicionamento do container */
-    background: url('./image/earth-2768.gif') no-repeat center center fixed; /* Define o GIF como fundo */
+    background: url('../image/earth-2768.gif') no-repeat center center fixed; /* Define o GIF como fundo */
     background-size: cover; /* Faz com que o GIF cubra toda a tela */
 }
 
