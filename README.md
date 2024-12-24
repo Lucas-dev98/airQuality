@@ -73,8 +73,8 @@ Este projeto está licenciado sob a licença MIT. Consulte o arquivo `LICENSE` p
 
 Para dúvidas ou sugestões, entre em contato:
 
-- **Email**: seuemail@dominio.com
-- **GitHub**: seu-usuario
+- **Linkedin**: https://www.linkedin.com/in/lucas-oliveira-bastos/
+- - **GitHub**: Lucas-dev98
 
 ### Agradecimentos
 
