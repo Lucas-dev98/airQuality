@@ -1,0 +1,63 @@
+{
+  "profile-bd301f51-3b5b-4238-930c-62cd4c356169": {
+    "id": "profile-bd301f51-3b5b-4238-930c-62cd4c356169",
+    "locale": "pt",
+    "alertPreferences": {
+      "heatThreshold": 35,
+      "rainThreshold": 0.6,
+      "windThreshold": 8,
+      "aqiThreshold": 3,
+      "notificationsEnabled": false
+    },
+    "updatedAt": 1780345196756
+  },
+  "test-profile-1": {
+    "id": "test-profile-1",
+    "locale": "pt",
+    "email": "qa@example.com",
+    "alertPreferences": {
+      "heatThreshold": 35,
+      "rainThreshold": 0.6,
+      "windThreshold": 8,
+      "aqiThreshold": 3,
+      "notificationsEnabled": true
+    },
+    "updatedAt": 1780346786434
+  },
+  "profile-8016e5f6-d234-4176-80ea-e7f9543566d1": {
+    "id": "profile-8016e5f6-d234-4176-80ea-e7f9543566d1",
+    "locale": "pt",
+    "alertPreferences": {
+      "heatThreshold": 35,
+      "rainThreshold": 0.6,
+      "windThreshold": 8,
+      "aqiThreshold": 3,
+      "notificationsEnabled": false
+    },
+    "updatedAt": 1780338393381
+  },
+  "profile-87717387-b682-4c5f-af6c-88f6feb33528": {
+    "id": "profile-87717387-b682-4c5f-af6c-88f6feb33528",
+    "locale": "pt",
+    "alertPreferences": {
+      "heatThreshold": 35,
+      "rainThreshold": 0.6,
+      "windThreshold": 8,
+      "aqiThreshold": 3,
+      "notificationsEnabled": false
+    },
+    "updatedAt": 1780345195798
+  },
+  "profile-52edb1a7-9483-47e8-9212-b2ab33bc29ab": {
+    "id": "profile-52edb1a7-9483-47e8-9212-b2ab33bc29ab",
+    "locale": "pt",
+    "alertPreferences": {
+      "heatThreshold": 35,
+      "rainThreshold": 0.6,
+      "windThreshold": 8,
+      "aqiThreshold": 3,
+      "notificationsEnabled": false
+    },
+    "updatedAt": 1780346647033
+  }
+}

@@ -1,105 +1,292 @@
-# Condições Climáticas Atuais 🌤️
+# Condicoes Climaticas Atuais
 
-Este é um projeto web que permite aos usuários verificar as condições climáticas atuais para qualquer localização fornecida. Ao inserir o nome de uma cidade ou endereço, o aplicativo usa a API OpenCage para converter o local em coordenadas geográficas e a API Azure Maps para exibir dados climáticos detalhados, incluindo temperatura, sensação térmica, umidade, vento e índice UV. O fundo animado do site apresenta um GIF de um globo giratório, proporcionando uma experiência visual envolvente.
+Aplicacao web de clima e qualidade do ar com busca por cidade ou coordenadas, previsao de 5 dias, AQI, historico, favoritos e alertas.
+
+## Stack Atual
+
+- Frontend: React + Vite + TypeScript
+- Backend: Node.js + Express + TypeScript
+- Graficos: Chart.js + react-chartjs-2
+- API externa: OpenWeather
 
 ## Funcionalidades
 
-- **Busca de clima atual**: Insira coordenadas ou um endereço para obter informações climáticas em tempo real.
-- **Conversão de endereço**: Use a API OpenCage para converter nomes de locais em coordenadas de latitude e longitude.
-- **Dados climáticos detalhados**: Exibe temperatura, sensação térmica, umidade, velocidade do vento, direção do vento e índice UV.
-- **Animação de fundo**: Um GIF de globo giratório é usado como plano de fundo para uma experiência mais imersiva.
-- **Favicon**: Ícone personalizado para o site.
+- Clima atual por cidade ou coordenadas
+- Previsao em blocos de 3h (5 dias)
+- AQI e poluentes (PM2.5, PM10, NO2, O3)
+- Geocoding e reverse geocoding
+- Favoritos e historico no navegador
+- Alertas climaticos (chuva, calor, vento, qualidade do ar)
+- Alertas persistentes por e-mail (opcional, via Resend)
+- Cache em memoria no backend (TTL de 10 minutos)
+- Tema claro/escuro com persistencia
+- i18n basico (PT-BR / EN)
+- Widget de UV e horario de nascer/por do sol
+- Historico climatico recente com grafico
+- Painel multi-cidades (ate 5 cidades)
+- Cockpit geoespacial no mapa com camadas climaticas (temperatura, chuva, nuvens, pressao, vento)
+- Timeline no mapa com leitura de risco por periodo
+- Heatmap de risco climatico com score operacional por segmento (agro/mobilidade/saude)
+- Geofencing com desenho de zonas monitoradas no mapa
+- Rota weather-aware com recomendacao de trajeto com menor risco
+- Cluster geoespacial para comparador multi-cidades
+- Compartilhamento por URL com parametros de busca
+- Skeleton loading e lazy load dos graficos
+- Comparador de cidades lado a lado
+- Alertas personalizados por usuario (limites de calor, chuva, vento e AQI)
+- Notificacoes de navegador para alertas relevantes
+- PWA com suporte offline e instalacao no dispositivo
+- Validacao de entrada com Zod no backend
+- Rate limit, CORS configuravel e cabecalhos de seguranca (Helmet)
+- Logs estruturados com Pino
+- Cache distribuido opcional com Redis em producao (fallback para memoria)
+- Testes automatizados (API e frontend)
 
-## Tecnologias Utilizadas
+## Estrutura do Projeto
 
-- **HTML5**: Estrutura da página web.
-- **CSS3**: Estilização da página e animação de fundo.
-- **JavaScript**: Lógica de front-end e integração com APIs.
-- **Node.js**: Servidor backend.
-- **Express**: Framework para Node.js.
-- **OpenCage Geocoding API**: Para converter endereços em coordenadas geográficas.
-- **Azure Maps Weather API**: Para obter dados climáticos atuais.
+```
+airQuality/
+    client/               # Frontend React + Vite + TypeScript
+    image/                # Imagens estaticas
+    private/.env          # Variaveis de ambiente locais
+    src/server.ts         # Backend Express em TypeScript
+    tsconfig.server.json  # Configuracao TS do backend
+```
 
-## Pré-requisitos
+## Variaveis de Ambiente
 
-- Um navegador web moderno (por exemplo, Google Chrome, Mozilla Firefox).
-- Conexão com a internet para acessar as APIs.
+Crie o arquivo `private/.env` com:
 
-## Como Executar o Projeto
+```
+OPENWEATHER_API_KEY=sua_chave_aqui
+```
 
-Siga as instruções abaixo para configurar e executar o projeto localmente.
+Opcional para producao com Redis:
 
-### Passo 1: Clonar o Repositório
+```
+REDIS_URL=redis://usuario:senha@host:6379
+REDIS_PREFIX=air-quality
+```
 
-Clone o repositório do GitHub e navegue até o diretório do projeto.
+Opcional para alertas por e-mail:
 
-### Passo 2: Obter Chaves de API
+```
+RESEND_API_KEY=sua_chave_resend
+ALERT_EMAIL_FROM=alerts@seu-dominio.com
+```
 
-- **OpenCage**: Crie uma conta no [OpenCage](https://opencagedata.com/) e obtenha sua chave de API.
-- **Azure Maps**: Crie uma conta no [Azure](https://azure.microsoft.com/) e obtenha a chave para a Azure Maps Weather API.
+Opcional para cache HTTP estatico:
 
-### Passo 3: Configurar Variáveis de Ambiente
+```
+STATIC_CACHE_MAX_AGE_SECONDS=86400
+```
 
-Crie um arquivo `.env` na pasta `private` e adicione suas chaves de API.
+Para deploy separado do frontend (Vercel) e backend (Render), configure no frontend:
 
-### Passo 4: Instalar Dependências
+```
+VITE_API_BASE_URL=https://seu-backend.onrender.com
+VITE_MAPBOX_TOKEN=seu_token_mapbox_aqui
+```
 
-Instale as dependências do projeto.
+## Rodando Localmente
 
-### Passo 5: Executar o Projeto
+1. Instale dependencias no root:
 
-Inicie o servidor Node.js e abra o navegador para acessar o aplicativo.
+```bash
+npm.cmd install
+```
 
-## Como Adicionar o Favicon
+2. Instale dependencias do frontend:
 
-1. Coloque o arquivo `icon.png` na pasta `public`.
-2. Atualize o arquivo `index.html` para incluir o favicon.
+```bash
+npm.cmd --prefix client install
+```
 
-## Como Fazer o Deploy
+3. Rode backend + frontend em desenvolvimento:
 
-### Usando Render
+```bash
+npm.cmd run dev
+```
 
-1. Crie uma conta no [Render](https://render.com/).
-2. Conecte seu repositório GitHub ao Render.
-3. Configure o serviço web:
-    - **Build Command**: `npm install`
-    - **Start Command**: `node server.js`
-4. Adicione as variáveis de ambiente no painel do Render.
-5. Inicie o deploy.
+4. Acesse:
 
-### Estrutura do Projeto
+- Frontend (Vite): `http://localhost:5173`
+- API (Express): `http://localhost:3000`
 
-Certifique-se de que a estrutura do seu projeto está correta.
+## Build e Producao
 
-## Contribuição
+1. Build completo:
 
-Contribuições são bem-vindas! Para contribuir com o projeto, siga os passos abaixo:
+```bash
+npm.cmd run build
+```
 
-1. **Fork o repositório.**
-2. **Crie uma branch para sua feature**.
-3. **Faça commit das suas alterações**.
-4. **Envie para o branch**.
-5. **Abra um Pull Request.**
+2. Subir servidor de producao:
 
-## Licença
+```bash
+npm.cmd run start
+```
 
-Este projeto está licenciado sob a licença MIT. Consulte o arquivo `LICENSE` para obter mais informações.
+Em producao, o backend serve os arquivos gerados em `client/dist`.
 
-## Contato
+## Testes
 
-Para dúvidas ou sugestões, entre em contato:
+1. Executar todos os testes:
 
-- **Linkedin**: https://www.linkedin.com/in/lucas-oliveira-bastos/
-- **GitHub**: Lucas-dev98
+```bash
+npm.cmd run test
+```
 
-## Agradecimentos
+2. Executar somente API:
 
-A experiência vivida na Campus Party foi transformadora. Participar das palestras e conversar com figuras inspiradoras como o saudoso Gustavo Guanabara e outros especialistas foi extremamente enriquecedor. Uma das frases que mais me marcou foi: **"Não sabe, aprende no processo."** Essa citação ressoou profundamente e se tornou um mantra ao longo do desenvolvimento deste projeto.
+```bash
+npm.cmd run test:api
+```
 
-No início, eu não tinha a menor ideia de como utilizar uma API, mas a frase "não sabe, aprende no processo" me impulsionou a buscar conhecimento e superar desafios. A jornada de aprender a trabalhar com APIs foi um processo de descoberta e crescimento. Com a ideia já montada, a necessidade de entender a tecnologia me levou a explorar novas ferramentas e técnicas, transformando a incerteza inicial em uma valiosa experiência de aprendizado.
+3. Executar somente frontend:
 
-Este projeto é um reflexo desse aprendizado contínuo e da determinação de não desistir diante das dificuldades. A Campus Party e os ensinamentos dos especialistas foram fundamentais para me lembrar que cada obstáculo é uma oportunidade de crescimento. Agradeço a todos que contribuíram para essa jornada e às comunidades que compartilham conhecimento, tornando possível a realização deste projeto.
+```bash
+npm.cmd run test:web
+```
 
-## Hospedagem
+## Endpoints da API
 
-O projeto está hospedado no Render e pode ser acessado em: [https://airquality-vqcq.onrender.com/](https://airquality-vqcq.onrender.com/)
+- `GET /api/weather?location=Lisboa&units=metric&lang=pt_br`
+- `GET /api/weather?lat=38.72&lon=-9.13&units=metric&lang=pt_br`
+- `GET /api/forecast?location=Lisboa&units=metric&lang=pt_br`
+- `GET /api/geocode?location=Lisboa&limit=5`
+- `GET /api/reverse-geocode?lat=38.72&lon=-9.13&limit=1`
+- `GET /api/air-quality?lat=38.72&lon=-9.13`
+- `GET /api/air-quality-forecast?lat=38.72&lon=-9.13`
+- `GET /api/uv-index?lat=38.72&lon=-9.13&units=metric&lang=pt_br`
+- `GET /api/weather-history?lat=38.72&lon=-9.13&units=metric&lang=pt_br&days=2`
+- `GET /api/weather-tile/:layer/:z/:x/:y.png?ts=unix_timestamp`
+- `GET /api/geofences/:profileId`
+- `PUT /api/geofences/:profileId`
+- `GET /api/user-preferences/:profileId`
+- `PUT /api/user-preferences/:profileId`
+- `POST /api/deliver-alert`
+
+## Deploy
+
+### Opcao A: Render (Web Service unico)
+
+- Build Command: `npm install && npm --prefix client install && npm run build`
+- Start Command: `npm run start`
+- Environment: `OPENWEATHER_API_KEY`
+
+Nesta opcao, o backend serve o frontend compilado em `client/dist`.
+
+### Opcao B: API no Render + Frontend no Vercel
+
+#### 1) Deploy da API (Render)
+
+- Crie um Web Service no Render apontando para este repositorio
+- Build Command:
+
+```bash
+npm install && npm run build
+```
+
+- Start Command:
+
+```bash
+npm run start
+```
+
+- Variavel de ambiente obrigatoria:
+
+```bash
+OPENWEATHER_API_KEY=sua_chave_aqui
+```
+
+#### 2) Deploy do Frontend (Vercel)
+
+- Crie um projeto no Vercel usando a pasta raiz do repositorio
+- Configure:
+1. Framework Preset: `Vite`
+2. Root Directory: `client`
+3. Build Command: `npm run build`
+4. Output Directory: `dist`
+
+- Variavel de ambiente no Vercel:
+
+```bash
+VITE_API_BASE_URL=https://seu-backend.onrender.com
+VITE_MAPBOX_TOKEN=seu_token_mapbox_aqui
+```
+
+Com isso, o frontend no Vercel consome a API hospedada no Render.
+
+## CI/CD
+
+O projeto ja inclui pipeline de CI no GitHub Actions:
+
+- Arquivo: `.github/workflows/ci.yml`
+- Etapas: install -> build -> test
+
+## Troubleshooting
+
+### 1) Erro de CORS no frontend
+
+- Sintoma: requisicoes para `/api/*` bloqueadas no navegador
+- Correcao:
+1. Em deploy separado, defina `CORS_ORIGIN` no backend com o dominio do frontend (ex.: `https://seu-app.vercel.app`)
+2. Verifique `VITE_API_BASE_URL` no frontend
+
+### 2) OPENWEATHER_API_KEY ausente
+
+- Sintoma: API retorna erro de chave nao configurada
+- Correcao:
+1. Defina `OPENWEATHER_API_KEY` no `private/.env` (local)
+2. Defina a mesma variavel no provedor de deploy (Render)
+
+### 3) Frontend aponta para API errada no Vercel
+
+- Sintoma: frontend sobe, mas nao carrega dados de clima
+- Correcao:
+1. Configure `VITE_API_BASE_URL=https://seu-backend.onrender.com`
+2. Refaça o deploy do frontend para aplicar a variavel
+
+### 4) Mapa nao carrega
+
+- Sintoma: bloco do mapa aparece vazio ou com erro de token
+- Correcao:
+1. Configure `VITE_MAPBOX_TOKEN` no frontend/Vercel
+2. Verifique se o token do Mapbox esta ativo e com permissao para estilos
+
+### 5) Limite de requisicoes atingido (429)
+
+- Sintoma: resposta com mensagem de limite excedido
+- Correcao:
+1. Aguarde alguns minutos
+2. Ajuste debounce no frontend se necessario
+3. Revise `RATE_LIMIT_MAX` no backend para seu ambiente
+
+Observacao: o rate limit considera IP + `x-client-id` (enviado pelo frontend), reduzindo impacto de NAT corporativo.
+
+### 6) npm bloqueado no PowerShell (Windows)
+
+- Sintoma: erro de Execution Policy ao rodar `npm`
+- Correcao:
+1. Use `npm.cmd` em vez de `npm`
+
+### 7) Redis indisponivel em producao
+
+- Sintoma: latencia maior e mais chamadas diretas para API externa
+- Correcao:
+1. Verifique se `REDIS_URL` esta correta
+2. Verifique conectividade do servidor com o host Redis
+3. Sem Redis, a aplicacao usa fallback de cache em memoria
+
+### 7) PWA nao instala/offline nao funciona
+
+- Sintoma: app nao aparece para instalar ou nao abre offline
+- Correcao:
+1. Use HTTPS em deploy
+2. Abra uma vez online para service worker ser registrado
+3. Verifique se o build foi feito com `npm run build`
+
+## Licenca
+
+MIT
